@@ -1,5 +1,6 @@
 package CS415;
+import javax.swing.*;
 
-public class SimControl {
+public class SimControl extends JFrame{
 
 }
