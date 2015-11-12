@@ -31,6 +31,13 @@ public class Display extends JPanel{
 		
 		fillCells0.add(new Point(0,0));
 		fillCells1.add(new Point(1,0));
+		fillCells1.add(new Point(2,0));
+		fillCells1.add(new Point(1,1));
+		fillCells1.add(new Point(2,1));
+		fillCells1.add(new Point(1,2));
+		fillCells1.add(new Point(2,2));
+		fillCells1.add(new Point(1,3));
+		fillCells1.add(new Point(2,3));
 		repaint();
 	}
 	
