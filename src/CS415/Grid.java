@@ -2,6 +2,7 @@ package CS415;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Grid {
 	
@@ -97,6 +98,11 @@ public class Grid {
 		}
 
 		return aValues;
+	}
+	
+	public Set<Map.Entry<Cell, Integer>> getLiveCells() {
+		
+		return liveCells.entrySet();
 	}
 	
 	public String toString() {
