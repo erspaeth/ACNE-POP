@@ -2,21 +2,42 @@ package CS415;
 
 public class Simulation {
 
-	private Grid startGrid, currentGrid;
-	int iterations;
+	private Grid initialState, currentState, nextState;
+	private IRuleSet ruleset;
+	private int generation;
 	
-	public Simulation(Grid start, Grid current, int iter){
-		startGrid = start;
-		currentGrid = current;
-		iterations = iter;
+	public Simulation() {
+		
+		generation = 0;
 	}
 	
-	public Simulation(Grid fresh){
-		startGrid = currentGrid = fresh;
-		iterations = 0;
+	public Simulation(IRuleSet ruleset, Shape shape) {
+		
+		this();
+		initialState = new Grid(shape);
+		currentState = new Grid(shape);
+		nextState = new Grid();
 	}
 	
-	public Grid getCurrentGrid(){
-		return currentGrid;
+	public void step() {
+		
+		generation++;
+		
+		ruleset.applyRuleset(currentState, nextState);
+		
+		Grid temp = currentState;
+		currentState = nextState;
+		nextState = temp;
+		nextState.clear();
+		
 	}
+	
+	public void reset() {
+		
+		
+		
+	}
+	
+	public static void main(String args[]) {}
+		
 }
