@@ -19,7 +19,29 @@ public class SimControl extends JFrame{
 		
 		//create display from grid
 		//display = new Display(current);
-		display = new Display();
+		int bob[][] = new int[50][50];
+		bob[4][5] = 1;
+		bob[4][10] = 1;
+		bob[5][5] = 1;
+		bob[5][10] = 1;
+		bob[6][5] = 1;
+		bob[6][10] = 1;
+		bob[7][3] = 1;
+		bob[7][12] = 1;
+		bob[8][3] = 1;
+		bob[8][12] = 1;
+		bob[9][4] = 1;
+		bob[9][11] = 1;
+		bob[10][5] = 1;
+		bob[10][6] = 1;
+		bob[10][9] = 1;
+		bob[10][10] = 1;
+		bob[11][7] = 1;
+		bob[11][8] = 1;
+		
+		Grid test = new Grid(bob);
+		
+		display = new Display(test);
 		
 		//get iterations
 		
