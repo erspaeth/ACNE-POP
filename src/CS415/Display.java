@@ -31,18 +31,6 @@ public class Display extends JPanel{
 		super();
 		int width = 50, height = 50;
 		
-		/*fillCells0 = new ArrayList<>(width * height);
-		fillCells1 = new ArrayList<>(width * height);
-		
-		fillCells1.add(new Point(1,0));
-		fillCells1.add(new Point(2,0));
-		fillCells1.add(new Point(1,1));
-		fillCells1.add(new Point(2,1));
-		fillCells1.add(new Point(1,2));
-		fillCells1.add(new Point(2,2));
-		fillCells1.add(new Point(1,3));
-		fillCells1.add(new Point(2,3));*/
-		
 		//for (int = 0;)
 		fillCells = new HashMap<Integer, List<Point>>();
 		
@@ -51,9 +39,6 @@ public class Display extends JPanel{
 		fillCells.put(2, new ArrayList<Point>(width * height));
 		fillCells.get(2).add(new Point(2,1));
 		
-		//fillCells.insertElementAt(new ArrayList<Point>(width * height), 1);
-		//fillCells.elementAt(1).add(new Point(1,1));
-		
 		repaint();
 	}
 	
@@ -61,7 +46,7 @@ public class Display extends JPanel{
 		super();
 		currentGrid = source;
 		int width = source.getWidth(), height = source.getHeight();
-		
+		fillCells = new HashMap<Integer, List<Point>>();
 		Set<Map.Entry<Cell, Integer>> liveCellMap = source.getLiveCells();
 		
 		Cell temp;
