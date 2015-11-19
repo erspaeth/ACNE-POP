@@ -1,7 +1,7 @@
 package CS415;
 
 public class Simulation {
-	
+
 	private Grid initialState, currentState, nextState;
 	private IRuleSet ruleset;
 	private int generation;
@@ -42,5 +42,4 @@ public class Simulation {
 		
 		
 	}
-	
 }
