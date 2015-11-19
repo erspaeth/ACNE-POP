@@ -27,12 +27,15 @@ public class ConwaysGameOfLife implements IRuleSet {
 				int count = 0;
 				int currentState = input.getCellValue(i, j);
 				
-				for(int m = i-1; m < i+1; m++) {
-					for(int n = j-1; n < j+1; n++) {
+				for(int m = i-1; m <= i+1; m++) {
+					for(int n = j-1; n <= j+1; n++) {
 						
 						if((m!=i) || (n!=j)) {
 							
-							count += input.getCellValue(mod(m, width), mod(n, height));
+							int modm = mod(m, width);
+							int modn = mod(n, height);
+							
+							count += input.getCellValue(modm, modn);
 						}
 					}
 				}

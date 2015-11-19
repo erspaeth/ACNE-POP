@@ -38,6 +38,47 @@ public class Simulation {
 		
 	}
 	
-	public static void main(String args[]) {}
+	public static void main(String args[]) {
+		
+		Grid g = new Grid(10, 10);
+		Grid g2 = new Grid(10, 10);
+		
+		IRuleSet rules = new ConwaysGameOfLife();
+		
+		g.setCellValue(2, 2, 1);
+		g.setCellValue(3, 3, 1);
+		
+		g.setCellValue(3, 4, 1);
+		g.setCellValue(2, 4, 1);
+		g.setCellValue(1, 4, 1);
+		
+		System.out.println(g.toString());
+		
+		g2.clear();
+		rules.applyRuleset(g, g2);
+		System.out.println(g2.toString());
+		
+		g.clear();
+		rules.applyRuleset(g2, g);
+		System.out.println(g.toString());
+		
+		g2.clear();
+		rules.applyRuleset(g, g2);
+		System.out.println(g2.toString());
+		
+		g.clear();
+		rules.applyRuleset(g2, g);
+		System.out.println(g.toString());
+		
+		g2.clear();
+		rules.applyRuleset(g, g2);
+		System.out.println(g2.toString());
+		
+		g.clear();
+		rules.applyRuleset(g2, g);
+		System.out.println(g.toString());
+		
+		
+	}
 		
 }
