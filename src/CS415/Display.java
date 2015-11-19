@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -19,11 +20,12 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class Display extends JPanel{
-	private final Color[] STATES = {Color.YELLOW, Color.BLACK};
+	private final Color[] STATES = {Color.YELLOW, Color.BLACK, Color.RED};
 	
 	//private List<Point> fillCells1, fillCells0;
 	private Grid currentGrid;
-	private Vector<List<Point>> fillCells;
+	//private Vector<List<Point>> fillCells;
+	private HashMap<Integer, List<Point>> fillCells;
 	
 	public Display(){
 		super();
@@ -41,8 +43,16 @@ public class Display extends JPanel{
 		fillCells1.add(new Point(1,3));
 		fillCells1.add(new Point(2,3));*/
 		
-		fillCells.insertElementAt(new ArrayList<Point>(width * height), 1);
-		fillCells.elementAt(1).add(new Point(1,1));
+		//for (int = 0;)
+		fillCells = new HashMap<Integer, List<Point>>();
+		
+		fillCells.put(1, new ArrayList<Point>(width * height));
+		fillCells.get(1).add(new Point(1,1));
+		fillCells.put(2, new ArrayList<Point>(width * height));
+		fillCells.get(2).add(new Point(2,1));
+		
+		//fillCells.insertElementAt(new ArrayList<Point>(width * height), 1);
+		//fillCells.elementAt(1).add(new Point(1,1));
 		
 		repaint();
 	}
@@ -52,40 +62,21 @@ public class Display extends JPanel{
 		currentGrid = source;
 		int width = source.getWidth(), height = source.getHeight();
 		
-		
-		
-		//fillCells1 = new ArrayList<>(width * height); // for state 1 cells
-		
-		/*for (int row = 0; row < width; row++) {
-			for (int column = 0; column < width; column++) {
-				int state = source.getCell(row, column).getState();
-				if (state == 0){
-					fillCells0.add(new Point(row, column));
-				}
-				else if (state == 1) {
-					fillCells1.add(new Point(row, column));
-				}
-			}
-		}*/
-		
 		Set<Map.Entry<Cell, Integer>> liveCellMap = source.getLiveCells();
 		
 		Cell temp;
 		int state;
 		
 		for (Map.Entry<Cell, Integer> entry : liveCellMap){
-			//use these to get the values
-			//entry.getKey();
-			//entry.getValue();
 			
 			temp = entry.getKey();
 			state = entry.getValue();
 			
-			if (fillCells.elementAt(state).isEmpty()) {
-				fillCells.insertElementAt(new ArrayList<Point>(width * height), state);
+			if (fillCells.get(state) == null) {
+				fillCells.put(state, new ArrayList<Point>(width * height));
 			}
 
-			fillCells.elementAt(state).add(new Point(temp.getRow(), temp.getCol()));
+			fillCells.get(state).add(new Point(temp.getRow(), temp.getCol()));
 			
 		}
 		
@@ -104,7 +95,7 @@ public class Display extends JPanel{
         //iterate over vector of points to color
         List<Point> temp;
         for (int i = 1; i < 10; i++){
-        	temp = fillCells.elementAt(i);
+        	temp = fillCells.get(i);
         	if (temp != null){
         		colorCell(temp, g, STATES[i]);
         	}
