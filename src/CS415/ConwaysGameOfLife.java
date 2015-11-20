@@ -41,8 +41,6 @@ public class ConwaysGameOfLife implements IRuleSet {
 					}
 				}
 				
-				System.out.println("Count: " + count);
-				
 				if(currentState == 1) {
 					if(count == 2 || count == 3) {
 						target.setCellValue(i, j, 1);
