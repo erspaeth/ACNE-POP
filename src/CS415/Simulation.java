@@ -28,9 +28,7 @@ public class Simulation {
 		bob[11][8] = 1;
 
 		initialState = new Grid(bob);
-		System.out.println(initialState);
 		currentState = new Grid(initialState);
-		System.out.println(currentState);
 		nextState = new Grid();
 		generation = 0;
 		ruleset = new ConwaysGameOfLife();

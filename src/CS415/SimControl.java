@@ -84,76 +84,105 @@ public class SimControl extends JFrame{
         setVisible(true);
 	}
 	
+	private void play(){
+		new CATimer().execute();;
+	}
+
 	// action listener for buttons
-		class ButtonHandler implements ActionListener {
-			public void actionPerformed(ActionEvent e) {
-				String value = e.getActionCommand();
-				switch (value){
-				case PLAY:
-					pauseB.setEnabled(true);
-					playB.setEnabled(false);
-					if (DEBUG) {
-						messageTA.setText("Play pressed\n");
-					}
-					play();
-					break;
-				case PAUSE:
-					playB.setEnabled(true);
-					pauseB.setEnabled(false);
-					running = false;
-					if (DEBUG) {
-						messageTA.setText("Pause pressed");
-					}
-					break;
-				case RATE:
-					if (DEBUG) {
-						messageTA.setText("Rate pressed");
-					}
-					break;
-				case RESET:
-					if (DEBUG) {
-						messageTA.setText("Reset pressed");
-					}
-					break;
-				case SAVE:
-					if (DEBUG) {
-						messageTA.setText("Save pressed");
-					}
-					break;
-				case EXIT:
-					if (DEBUG) {
-						messageTA.setText("Exit pressed");
-					}
-					System.exit(0);
-					break;
-				case STEP:
-					//pause first
-					playB.setEnabled(true);
-					pauseB.setEnabled(false);
-					if (DEBUG) {
-						messageTA.setText("Step pressed");
-					}
+	class ButtonHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			String value = e.getActionCommand();
+			switch (value) {
+			case PLAY:
+				pauseB.setEnabled(true);
+				playB.setEnabled(false);
+				if (DEBUG) {
+					messageTA.setText("Play pressed\n");
+				}
+				play();
+				break;
+			case PAUSE:
+				playB.setEnabled(true);
+				pauseB.setEnabled(false);
+				running = false;
+				if (DEBUG) {
+					messageTA.setText("Pause pressed");
+				}
+				break;
+			case RATE:
+				play();
+				if (DEBUG) {
+					messageTA.setText("Rate pressed");
+				}
+				break;
+			case RESET:
+				sim.reset();
+				display.draw(sim.getCurrentState());
+				updateMessage(String.format("Generation: %d%nPopulation: %d", sim.getGeneration(), sim.getPopulation()));
+				if (DEBUG) {
+					messageTA.setText("Reset pressed");
+				}
+				break;
+			case SAVE:
+				if (DEBUG) {
+					messageTA.setText("Save pressed");
+				}
+				break;
+			case EXIT:
+				if (DEBUG) {
+					messageTA.setText("Exit pressed");
+				}
+				System.exit(0);
+				break;
+			case STEP:
+				// pause first
+				playB.setEnabled(true);
+				pauseB.setEnabled(false);
+				running = false;
+				if (DEBUG) {
+					messageTA.setText("Step pressed");
+				}
+				sim.step();
+				display.draw(sim.getCurrentState());
+				messageTA.setText(
+						String.format("Generation: %d%nPopulation: %d", sim.getGeneration(), sim.getPopulation()));
+
+				break;
+			default:
+				System.out.println("no matching button pressed");
+			}
+
+		}
+	}
+
+	protected void updateMessage(String message) {
+		messageTA.setText(message);
+	}
+		
+	class CATimer extends SwingWorker {
+
+		@Override
+		protected Object doInBackground() throws Exception {
+			running = true;
+			long current, previous = System.nanoTime();
+			long time = Long.parseLong(rateCB.getSelectedItem().toString());
+			while (running){
+				current = System.nanoTime();
+				if ((current - previous)/1000000000 > time){
 					sim.step();
 					display.draw(sim.getCurrentState());
-					messageTA.setText(
-							String.format(
+					updateMessage(String.format(
 									"Generation: %d%nPopulation: %d", 
 									sim.getGeneration(), sim.getPopulation()
-									)
-							);
-
-					break;
-				default:
-						System.out.println("no matching button pressed");
+									));
+					System.out.println("Running");
+					previous = current;
 				}
-				
 			}
+			return null;
 		}
 
-		private void play() {
-			//step simulation according to rate
-			long reference = System.currentTimeMillis();
-			
-		}
+
+	}
 	
 }
