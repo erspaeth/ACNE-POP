@@ -14,16 +14,16 @@ public class Simulation {
 		bob[5][10] = 1;
 		bob[6][5] = 1;
 		bob[6][10] = 1;
-		bob[7][3] = 1;
-		bob[7][12] = 1;
-		bob[8][3] = 1;
-		bob[8][12] = 1;
-		bob[9][4] = 1;
-		bob[9][11] = 1;
-		bob[10][5] = 1;
-		bob[10][6] = 1;
-		bob[10][9] = 1;
-		bob[10][10] = 1;
+		bob[7][3] = 2;
+		bob[7][12] = 2;
+		bob[8][3] = 2;
+		bob[8][12] = 2;
+		bob[9][4] = 3;
+		bob[9][11] = 3;
+		bob[10][5] = 3;
+		bob[10][6] = 3;
+		bob[10][9] = 3;
+		bob[10][10] = 3;
 		bob[11][7] = 1;
 		bob[11][8] = 1;
 
@@ -66,6 +66,10 @@ public class Simulation {
 	
 	public int getGeneration(){
 		return generation;
+	}
+	
+	public int getPopulation(){
+		return currentState.getPopulation();
 	}
 	
 	public Grid getCurrentState(){

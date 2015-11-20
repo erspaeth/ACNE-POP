@@ -27,15 +27,19 @@ public class ConwaysGameOfLife implements IRuleSet {
 				int count = 0;
 				int currentState = input.getCellValue(i, j);
 				
-				for(int m = i-1; m < i+1; m++) {
-					for(int n = j-1; n < j+1; n++) {
+				for(int m = i-1; m <= i+1; m++) {
+					for(int n = j-1; n <= j+1; n++) {
 						
 						if((m!=i) || (n!=j)) {
 							
 							count += input.getCellValue(mod(m, width), mod(n, height));
+							
 						}
+						
 					}
 				}
+				
+				System.out.println("Count: " + count);
 				
 				if(currentState == 1) {
 					if(count == 2 || count == 3) {
@@ -61,6 +65,8 @@ public class ConwaysGameOfLife implements IRuleSet {
 		}
 		return i;
 	}
+	
+	
 
 	@Override
 	public String getRuleName() {
