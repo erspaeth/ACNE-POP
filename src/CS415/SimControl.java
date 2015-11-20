@@ -6,56 +6,42 @@ import java.awt.event.ActionListener;
 
 public class SimControl extends JFrame{
 
+	private static final String PLAY = "Play", PAUSE = "Pause", STEP = "Step", 
+			RATE = "Apply Rate", RESET = "Reset", SAVE = "Save", EXIT = "Exit";
 	Display display;
 	JButton pauseB, playB, stepB, rateB, resetB, saveB, exitB;
 	JComboBox rateCB;
 	JTextArea messageTA;
 	JPanel controlP;
+	ActionListener buttonH;
+	boolean running = false;
+	Simulation sim;
 	
-	public SimControl(/*Simulation sim*/){
+	public SimControl(Simulation sim){
+		this.sim = sim;
 		
-		//get current grid from simulation
-		//Grid current = sim.getCurrentGrid();
-		
-		//create display from grid
-		//display = new Display(current);
-		int bob[][] = new int[50][50];
-		bob[4][5] = 1;
-		bob[4][10] = 1;
-		bob[5][5] = 1;
-		bob[5][10] = 1;
-		bob[6][5] = 1;
-		bob[6][10] = 1;
-		bob[7][3] = 1;
-		bob[7][12] = 1;
-		bob[8][3] = 1;
-		bob[8][12] = 1;
-		bob[9][4] = 1;
-		bob[9][11] = 1;
-		bob[10][5] = 1;
-		bob[10][6] = 1;
-		bob[10][9] = 1;
-		bob[10][10] = 1;
-		bob[11][7] = 1;
-		bob[11][8] = 1;
-		
-		Grid test = new Grid(bob);
-		
-		display = new Display(test);
-		
-		//get iterations
+		display = new Display(sim.getCurrentState());
 		
 		//JButtons
-		pauseB = new JButton("Pause");
-		playB = new JButton("Play");
-		stepB = new JButton("Step");
-		rateB = new JButton("Apply Rate");
-		resetB = new JButton("Reset");
-		saveB = new JButton("Save");
-		exitB = new JButton("Exit");
+		buttonH = new ButtonHandler();
+		pauseB = new JButton(PAUSE);
+		pauseB.addActionListener(buttonH);
+		pauseB.setEnabled(false);
+		playB = new JButton(PLAY);
+		playB.addActionListener(buttonH);
+		stepB = new JButton(STEP);
+		stepB.addActionListener(buttonH);
+		rateB = new JButton(RATE);
+		rateB.addActionListener(buttonH);
+		resetB = new JButton(RESET);
+		resetB.addActionListener(buttonH);
+		saveB = new JButton(SAVE);
+		saveB.addActionListener(buttonH);
+		exitB = new JButton(EXIT);
+		exitB.addActionListener(buttonH);
 		
 		//JComboBox
-		String[] rates = {"2.0", "1.0", "0.5", "0.25"};
+		String[] rates = {"1", "2", "3", "4"};
 		rateCB = new JComboBox<String>(rates);
 		
 		//JScrollPane
@@ -90,12 +76,53 @@ public class SimControl extends JFrame{
 	// action listener for buttons
 		class ButtonHandler implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-
-				if (e.getSource() == exitB){
+				String value = e.getActionCommand();
+				switch (value){
+				case PLAY:
+					pauseB.setEnabled(true);
+					playB.setEnabled(false);
+					messageTA.setText("Play pressed\n");
+					play();
+					break;
+				case PAUSE:
+					playB.setEnabled(true);
+					pauseB.setEnabled(false);
+					running = false;
+					messageTA.setText("Pause pressed");
+					break;
+				case RATE:
+					messageTA.setText("Rate pressed");
+					break;
+				case RESET:
+					messageTA.setText("Reset pressed");
+					break;
+				case SAVE:
+					messageTA.setText("Save pressed");
+					break;
+				case EXIT:
+					messageTA.setText("Exit pressed");
 					System.exit(0);
+					break;
+				case STEP:
+					//pause first
+					playB.setEnabled(true);
+					pauseB.setEnabled(false);
+					messageTA.setText("Step pressed");
+					sim.step();
+					display = new Display(sim.getCurrentState());
+					messageTA.append("\nGeneration: " + sim.getGeneration());
+					break;
+				default:
+						System.out.println("no matching button pressed");
 				}
 				
 			}
+		}
+
+		private void play() {
+			//step simulation according to rate
+			long reference = System.currentTimeMillis();
+			
 		}
 	
 }

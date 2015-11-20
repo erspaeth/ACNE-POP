@@ -61,7 +61,7 @@ public class Display extends JPanel{
 				fillCells.put(state, new ArrayList<Point>(width * height));
 			}
 
-			fillCells.get(state).add(new Point(temp.getRow(), temp.getCol()));
+			fillCells.get(state).add(new Point(temp.getCol(), temp.getRow()));
 			
 		}
 		
