@@ -46,7 +46,7 @@ public class Grid {
 		this(other.width, other.height);
 		
 		Cell temp;
-		for( Map.Entry<Cell, Integer> entry : liveCells.entrySet()){ 
+		for( Map.Entry<Cell, Integer> entry : other.getLiveCells()){ 
 			
 			temp = entry.getKey();
 			liveCells.put( new Cell(temp), entry.getValue() );
