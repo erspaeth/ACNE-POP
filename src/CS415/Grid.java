@@ -105,6 +105,10 @@ public class Grid {
 		return liveCells.entrySet();
 	}
 	
+	public int getPopulation(){
+		return liveCells.size();
+	}
+	
 	public String toString() {
 		
 		String sReturn;

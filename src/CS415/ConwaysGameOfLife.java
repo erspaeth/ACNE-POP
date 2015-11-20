@@ -32,13 +32,16 @@ public class ConwaysGameOfLife implements IRuleSet {
 						
 						if((m!=i) || (n!=j)) {
 							
-							int modm = mod(m, width);
-							int modn = mod(n, height);
+
+							count += input.getCellValue(mod(m, width), mod(n, height));
 							
-							count += input.getCellValue(modm, modn);
+
 						}
+						
 					}
 				}
+				
+				System.out.println("Count: " + count);
 				
 				if(currentState == 1) {
 					if(count == 2 || count == 3) {
@@ -64,6 +67,8 @@ public class ConwaysGameOfLife implements IRuleSet {
 		}
 		return i;
 	}
+	
+	
 
 	@Override
 	public String getRuleName() {
