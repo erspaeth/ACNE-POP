@@ -32,8 +32,10 @@ public class ConwaysGameOfLife implements IRuleSet {
 						
 						if((m!=i) || (n!=j)) {
 							
+
 							count += input.getCellValue(mod(m, width), mod(n, height));
 							
+
 						}
 						
 					}
