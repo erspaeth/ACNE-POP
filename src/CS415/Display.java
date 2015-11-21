@@ -96,10 +96,10 @@ public class Display extends JPanel{
         super.paintComponent(g);
         
         //draw the lists in the correct color
-        g.drawRect(UNIT_SIZE, UNIT_SIZE, (width+1) * UNIT_SIZE, height * UNIT_SIZE);
+        g.drawRect(0, 0, (width+1) * UNIT_SIZE, height * UNIT_SIZE);
         
         g.setColor(STATES[0]);
-        g.fillRect(UNIT_SIZE, UNIT_SIZE, width * UNIT_SIZE, height * UNIT_SIZE); //set default background to dead color
+        g.fillRect(0, 0, width * UNIT_SIZE, height * UNIT_SIZE); //set default background to dead color
         
         //draw the living cells
         Set<Map.Entry<Integer, List<Point>>> liveCells = fillCells.entrySet();
@@ -113,22 +113,22 @@ public class Display extends JPanel{
         
         //draw grid lines
         g.setColor(Color.blue);
-        g.drawRect(UNIT_SIZE, UNIT_SIZE, width * UNIT_SIZE, height * UNIT_SIZE);
+        g.drawRect(0, 0, width * UNIT_SIZE, height * UNIT_SIZE);
 
-        for (int i = UNIT_SIZE; i <= width * UNIT_SIZE; i += UNIT_SIZE) {
-            g.drawLine(i, UNIT_SIZE, i, (height+1) * UNIT_SIZE);
+        for (int i = 0; i <= width * UNIT_SIZE; i += UNIT_SIZE) {
+            g.drawLine(i, 0, i, (height+1) * UNIT_SIZE);
         }
 
-        for (int i = UNIT_SIZE; i <= height * UNIT_SIZE; i += UNIT_SIZE) {
-            g.drawLine(UNIT_SIZE, i, (width+1) * UNIT_SIZE, i);
+        for (int i = 0; i <= height * UNIT_SIZE; i += UNIT_SIZE) {
+            g.drawLine(0, i, (width+1) * UNIT_SIZE, i);
         }
         
     }
 
     private void colorCell(List<Point> fillCells, Graphics g, Color color){
     	for (Point fillCell : fillCells) {
-            int cellX = UNIT_SIZE + (fillCell.x * UNIT_SIZE);
-            int cellY = UNIT_SIZE + (fillCell.y * UNIT_SIZE);
+            int cellX = UNIT_SIZE + ((fillCell.x - 1) * UNIT_SIZE);
+            int cellY = UNIT_SIZE + ((fillCell.y - 1)* UNIT_SIZE);
             g.setColor(color);
             g.fillRect(cellX, cellY, UNIT_SIZE, UNIT_SIZE);
         }

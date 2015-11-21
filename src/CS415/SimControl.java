@@ -27,6 +27,7 @@ public class SimControl extends JFrame{
 	public SimControl(Simulation sim){
 		this.sim = sim;
 		
+		
 		display = new Display(sim.getCurrentState());
 		displayWidth = display.getWidth()+10;
 		displayHeight = display.getHeight()+10;
@@ -74,12 +75,16 @@ public class SimControl extends JFrame{
 		controlP.add(exitB);
 		
 		setTitle("Grid Display");
-        //setSize(650, 710);
+        //setSize(650, 800);
 		setSize(displayWidth + buttonWidth, displayHeight + 200);
-        setLayout(new BorderLayout(10, 10));
+		setResizable(false);
+        
+		//borderlayout
+		setLayout(new BorderLayout(10, 10));
         add(display, BorderLayout.CENTER);
         add(controlP, BorderLayout.EAST);
         add(messageP, BorderLayout.SOUTH);
+        
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
