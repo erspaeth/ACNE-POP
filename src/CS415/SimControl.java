@@ -33,7 +33,7 @@ public class SimControl extends JFrame{
 		
 		display = new Display(sim.getCurrentState());
 		displayWidth = display.getWidth()+20;
-		displayHeight = display.getHeight()+20;
+		displayHeight = display.getHeight()+50;
 		display.setPreferredSize(new Dimension(displayWidth,displayHeight));
 		
 		//JButtons
@@ -62,16 +62,16 @@ public class SimControl extends JFrame{
 		rate = new Long((Integer)rateCB.getSelectedItem());
 		
 		//JLabels
-		fpsL = new JLabel("FPS", JLabel.CENTER);
-		generationL = new JLabel("Generation", JLabel.CENTER);
-		populationL = new JLabel("Population", JLabel.CENTER);
+		fpsL = new JLabel("FPS");
+		generationL = new JLabel("Generation");
+		populationL = new JLabel("Population");
 		
 		//JTextFields
-		fpsTF = new JTextField(rateCB.getSelectedItem().toString(), JTextField.CENTER);
+		fpsTF = new JTextField(rateCB.getSelectedItem().toString());
 		fpsTF.setEditable(false);
-		generationTF = new JTextField("" + sim.getGeneration(), JTextField.CENTER);
+		generationTF = new JTextField("" + sim.getGeneration());
 		generationTF.setEditable(false);
-		populationTF = new JTextField("" + sim.getPopulation(), JTextField.CENTER);
+		populationTF = new JTextField("" + sim.getPopulation());
 		populationTF.setEditable(false);
 		
 		//JTextArea
@@ -94,7 +94,7 @@ public class SimControl extends JFrame{
 		
 		setTitle("Grid Display");
         //setSize(650, 800);
-		setSize(displayWidth, displayHeight + 250);
+		setSize(displayWidth, displayHeight + 200);
 		setResizable(false);
         
 //		//borderlayout
@@ -110,7 +110,7 @@ public class SimControl extends JFrame{
         c.fill = GridBagConstraints.BOTH;
         c.insets = new Insets(5,5,5,5);
         c.weightx = 1;
-        c.weighty = 5;
+        c.weighty = 0;
         c.gridx = 0;
         c.gridy = 0;
         add(playB,c);
@@ -126,12 +126,12 @@ public class SimControl extends JFrame{
         c.gridy++;
         c.gridx = 0;
         c.gridwidth = 5;
-        c.weighty = displayHeight;
+        c.weighty = displayHeight+20;
         add(display, c);
         c.gridy++;
         c.gridx = 0;
         c.gridwidth = 2;
-        c.weighty = 5;
+        c.weighty = 0;
         add(resetB,c);
         c.gridx++;
         c.gridx++;

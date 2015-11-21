@@ -23,7 +23,7 @@ public class Grid {
 		liveCells = new HashMap<Cell, Integer>();
 	}
 	
-	public Grid(int width, int height, int states) {
+	public Grid(int width, int height, int numberOfStates, int popPercentage) {
 		
 		this.width = width;
 		this.height = height;
@@ -34,7 +34,9 @@ public class Grid {
 		for(int i = 0; i < width; i++) {
 			
 			for(int j = 0; j < height; j++) {
-					liveCells.put(new Cell(i,j), rand.nextInt(states));
+					if(rand.nextInt(100) < popPercentage){
+						liveCells.put(new Cell(i,j), rand.nextInt(numberOfStates));
+					}
 			}
 		}
 	}
