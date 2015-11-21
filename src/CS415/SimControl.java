@@ -7,11 +7,12 @@ import java.awt.event.ActionListener;
 public class SimControl extends JFrame{
 
 	private static final String PLAY = "Play", PAUSE = "Pause", STEP = "Step", 
-			RATE = "Apply Rate", RESET = "Reset", SAVE = "Save", EXIT = "Exit";
-	private static final boolean DEBUG = false;
+			RESET = "Reset", SAVE = "Save", EXIT = "Exit";
+	
 	Display display;
 	JButton pauseB, playB, stepB, rateB, resetB, saveB, exitB;
-	JComboBox rateCB;
+	JLabel rateL;
+	JComboBox<Integer> rateCB;
 	JTextArea messageTA;
 	JPanel controlP;
 	JScrollPane messageP;
@@ -19,7 +20,7 @@ public class SimControl extends JFrame{
 	boolean running = false;
 	Boolean activeTimer;
 	Simulation sim;
-	int displayWidth, displayHeight, buttonWidth = 120;
+	int displayWidth, displayHeight, buttonWidth = 90;
 	long rate;
 	SwingWorker worker = new CATimer();;
 	
@@ -39,8 +40,6 @@ public class SimControl extends JFrame{
 		playB.addActionListener(buttonH);
 		stepB = new JButton(STEP);
 		stepB.addActionListener(buttonH);
-		rateB = new JButton(RATE);
-		rateB.addActionListener(buttonH);
 		resetB = new JButton(RESET);
 		resetB.addActionListener(buttonH);
 		saveB = new JButton(SAVE);
@@ -49,24 +48,27 @@ public class SimControl extends JFrame{
 		exitB.addActionListener(buttonH);
 		
 		//JComboBox
-		String[] rates = {"1", "2", "3", "4"};
-		rateCB = new JComboBox<String>(rates);
-		
-		rate = Long.parseLong(rateCB.getSelectedItem().toString());
+		rateL = new JLabel("Rate (FPS):");
+		Integer[] rates = {1,2,3,4,5,10,20};
+		rateCB = new JComboBox<Integer>(rates);
+		rateCB.addActionListener(buttonH);
+
+		rate = new Long((Integer)rateCB.getSelectedItem());
 		
 		//JTextArea
 		messageTA = new JTextArea();
 		messageTA.setRows(10);
 		displayStats();
+		messageP = new JScrollPane(messageTA);
 		
 		//JPanel
 		controlP = new JPanel();
-		controlP.setLayout(new GridLayout(8,1));
+		controlP.setLayout(new GridLayout(8,1,10,10));
 		controlP.add(pauseB);
 		controlP.add(playB);
 		controlP.add(stepB);
+		controlP.add(rateL);
 		controlP.add(rateCB);
-		controlP.add(rateB);
 		controlP.add(resetB);
 		controlP.add(saveB);
 		controlP.add(exitB);
@@ -77,7 +79,7 @@ public class SimControl extends JFrame{
         setLayout(new BorderLayout(10, 10));
         add(display, BorderLayout.CENTER);
         add(controlP, BorderLayout.EAST);
-        add(messageTA, BorderLayout.SOUTH);
+        add(messageP, BorderLayout.SOUTH);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
@@ -99,14 +101,15 @@ public class SimControl extends JFrame{
 	private void displayStats(){
 		messageTA.setText(String.format(
 						  "Frames per second: %d%n"
-						+ "Generation: 	      %d%n"
-						+ "Population: 	      %d", 
+						+ "Generation: %d%n"
+						+ "Population: %d", 
 						rate, sim.getGeneration(), sim.getPopulation()));
 	}
 
 	// action listener for buttons
 	class ButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			
 			String value = e.getActionCommand();
 			switch (value) {
 			case PLAY:
@@ -115,11 +118,8 @@ public class SimControl extends JFrame{
 			case PAUSE:
 				pause();
 				break;
-			case RATE:
-				pause();
-				play();
-				break;
 			case RESET:
+				pause();
 				sim.reset();
 				display.draw(sim.getCurrentState());
 				displayStats();
@@ -137,7 +137,10 @@ public class SimControl extends JFrame{
 				displayStats();
 				break;
 			default:
-				System.out.println("no matching button pressed");
+				if (!playB.isEnabled()){
+					pause();
+					play();
+				}
 			}
 
 		}
@@ -147,12 +150,12 @@ public class SimControl extends JFrame{
 		messageTA.setText(message);
 	}
 		
-	class CATimer extends SwingWorker<Boolean, Simulation> {
+	class CATimer extends SwingWorker {
 
 		@Override
-		protected Boolean doInBackground() throws Exception {
+		protected Object doInBackground() throws Exception {
 			running = true;
-			rate = Long.parseLong(rateCB.getSelectedItem().toString());
+			rate = new Long((Integer)rateCB.getSelectedItem());
 			long time = 1000/rate;
 			
 			while (running){
