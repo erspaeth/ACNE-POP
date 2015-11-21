@@ -8,11 +8,11 @@ public class SimControl extends JFrame{
 
 	private static final String PLAY = "Play", PAUSE = "Pause", STEP = "Step", 
 			RESET = "Reset", SAVE = "Save", EXIT = "Exit";
-	private static final boolean DEBUG = false;
+	
 	Display display;
 	JButton pauseB, playB, stepB, rateB, resetB, saveB, exitB;
 	JLabel rateL;
-	JComboBox rateCB;
+	JComboBox<Integer> rateCB;
 	JTextArea messageTA;
 	JPanel controlP;
 	JScrollPane messageP;
@@ -59,6 +59,7 @@ public class SimControl extends JFrame{
 		messageTA = new JTextArea();
 		messageTA.setRows(10);
 		displayStats();
+		messageP = new JScrollPane(messageTA);
 		
 		//JPanel
 		controlP = new JPanel();
@@ -78,7 +79,7 @@ public class SimControl extends JFrame{
         setLayout(new BorderLayout(10, 10));
         add(display, BorderLayout.CENTER);
         add(controlP, BorderLayout.EAST);
-        add(messageTA, BorderLayout.SOUTH);
+        add(messageP, BorderLayout.SOUTH);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
