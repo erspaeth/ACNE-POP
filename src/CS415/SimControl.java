@@ -17,8 +17,11 @@ public class SimControl extends JFrame{
 	JScrollPane messageP;
 	ActionListener buttonH;
 	boolean running = false;
+	Boolean activeTimer;
 	Simulation sim;
 	int displayWidth, displayHeight, buttonWidth = 120;
+	long rate;
+	SwingWorker worker = new CATimer();;
 	
 	public SimControl(Simulation sim){
 		this.sim = sim;
@@ -49,17 +52,13 @@ public class SimControl extends JFrame{
 		String[] rates = {"1", "2", "3", "4"};
 		rateCB = new JComboBox<String>(rates);
 		
-		//JScrollPane
+		rate = Long.parseLong(rateCB.getSelectedItem().toString());
 		
 		//JTextArea
 		messageTA = new JTextArea();
 		messageTA.setRows(10);
-		messageTA.setText(
-				String.format(
-						"Generation: %d%nPopulation: %d", 
-						sim.getGeneration(), sim.getPopulation()
-						)
-				);		
+		displayStats();
+		
 		//JPanel
 		controlP = new JPanel();
 		controlP.setLayout(new GridLayout(8,1));
@@ -85,7 +84,24 @@ public class SimControl extends JFrame{
 	}
 	
 	private void play(){
-		new CATimer().execute();;
+		pauseB.setEnabled(true);
+		playB.setEnabled(false);
+		worker = new CATimer();
+		worker.execute();
+	}
+	
+	private void pause() {
+		worker.cancel(true);
+		playB.setEnabled(true);
+		pauseB.setEnabled(false);
+	}
+	
+	private void displayStats(){
+		messageTA.setText(String.format(
+						  "Frames per second: %d%n"
+						+ "Generation: 	      %d%n"
+						+ "Population: 	      %d", 
+						rate, sim.getGeneration(), sim.getPopulation()));
 	}
 
 	// action listener for buttons
@@ -94,59 +110,31 @@ public class SimControl extends JFrame{
 			String value = e.getActionCommand();
 			switch (value) {
 			case PLAY:
-				pauseB.setEnabled(true);
-				playB.setEnabled(false);
-				if (DEBUG) {
-					messageTA.setText("Play pressed\n");
-				}
 				play();
 				break;
 			case PAUSE:
-				playB.setEnabled(true);
-				pauseB.setEnabled(false);
-				running = false;
-				if (DEBUG) {
-					messageTA.setText("Pause pressed");
-				}
+				pause();
 				break;
 			case RATE:
+				pause();
 				play();
-				if (DEBUG) {
-					messageTA.setText("Rate pressed");
-				}
 				break;
 			case RESET:
 				sim.reset();
 				display.draw(sim.getCurrentState());
-				updateMessage(String.format("Generation: %d%nPopulation: %d", sim.getGeneration(), sim.getPopulation()));
-				if (DEBUG) {
-					messageTA.setText("Reset pressed");
-				}
+				displayStats();
 				break;
 			case SAVE:
-				if (DEBUG) {
-					messageTA.setText("Save pressed");
-				}
 				break;
 			case EXIT:
-				if (DEBUG) {
-					messageTA.setText("Exit pressed");
-				}
 				System.exit(0);
 				break;
 			case STEP:
 				// pause first
-				playB.setEnabled(true);
-				pauseB.setEnabled(false);
-				running = false;
-				if (DEBUG) {
-					messageTA.setText("Step pressed");
-				}
+				pause();
 				sim.step();
 				display.draw(sim.getCurrentState());
-				messageTA.setText(
-						String.format("Generation: %d%nPopulation: %d", sim.getGeneration(), sim.getPopulation()));
-
+				displayStats();
 				break;
 			default:
 				System.out.println("no matching button pressed");
@@ -159,25 +147,19 @@ public class SimControl extends JFrame{
 		messageTA.setText(message);
 	}
 		
-	class CATimer extends SwingWorker {
+	class CATimer extends SwingWorker<Boolean, Simulation> {
 
 		@Override
-		protected Object doInBackground() throws Exception {
+		protected Boolean doInBackground() throws Exception {
 			running = true;
-			long current, previous = System.nanoTime();
-			long time = Long.parseLong(rateCB.getSelectedItem().toString());
+			rate = Long.parseLong(rateCB.getSelectedItem().toString());
+			long time = 1000/rate;
+			
 			while (running){
-				current = System.nanoTime();
-				if ((current - previous)/1000000000 > time){
-					sim.step();
-					display.draw(sim.getCurrentState());
-					updateMessage(String.format(
-									"Generation: %d%nPopulation: %d", 
-									sim.getGeneration(), sim.getPopulation()
-									));
-					System.out.println("Running");
-					previous = current;
-				}
+				Thread.sleep(time);
+				sim.step();
+				display.draw(sim.getCurrentState());
+				displayStats();
 			}
 			return null;
 		}
