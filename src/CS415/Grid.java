@@ -2,6 +2,7 @@ package CS415;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 public class Grid {
@@ -20,6 +21,22 @@ public class Grid {
 		this.height = height;
 		
 		liveCells = new HashMap<Cell, Integer>();
+	}
+	
+	public Grid(int width, int height, int states) {
+		
+		this.width = width;
+		this.height = height;
+		
+		liveCells = new HashMap<Cell, Integer>();
+		Random rand = new Random();
+		
+		for(int i = 0; i < width; i++) {
+			
+			for(int j = 0; j < height; j++) {
+					liveCells.put(new Cell(i,j), rand.nextInt(states));
+			}
+		}
 	}
 	
 	public Grid(int[][] cells) {
