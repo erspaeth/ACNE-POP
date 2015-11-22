@@ -1,9 +1,10 @@
 package CS415;
 
-public class ConwaysGameOfLife implements IRuleSet {
+public class ConwaysGameOfLife extends RuleSet {
 	
-	public static final String RULE_NAME = "Conway's Game of Live";
-	public static final String RULE_DESCRIPTION = "add some text here";
+	public static int NUMBER_OF_STATES = 2;
+	public static String RULE_NAME = "Conway's Game of Live";
+	public static String DESCRIPTION = "blah blah blah";
 
 	public ConwaysGameOfLife() {
 		// TODO Auto-generated constructor stub
@@ -64,20 +65,6 @@ public class ConwaysGameOfLife implements IRuleSet {
 			i += divisor;
 		}
 		return i;
-	}
-	
-	
-
-	@Override
-	public String getRuleName() {
-
-		return RULE_NAME;
-	}
-
-	@Override
-	public String getRuleDescription() {
-
-		return RULE_DESCRIPTION;
 	}
 
 }

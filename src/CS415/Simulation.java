@@ -3,7 +3,7 @@ package CS415;
 public class Simulation {
 
 	private Grid initialState, currentState, nextState;
-	private IRuleSet ruleset;
+	private RuleSet ruleset;
 	private int generation;
 	
 	public Simulation() {
@@ -14,12 +14,21 @@ public class Simulation {
 		ruleset = new ConwaysGameOfLife();
 	}
 	
-	public Simulation(IRuleSet ruleset, Shape shape) {
+	public Simulation(RuleSet ruleset, Shape shape) {
 		
 		this();
 		initialState = new Grid(shape);
 		currentState = new Grid(shape);
 		nextState = new Grid();
+	}
+	
+	public Simulation(RuleSet ruleset, int width, int height, int cellFillRate) {
+		
+		this.ruleset = ruleset;
+		initialState = new Grid(width, height, ruleset.NUMBER_OF_STATES, cellFillRate);
+		currentState = new Grid(initialState);
+		nextState = new Grid(width, height);
+		generation = 0;
 	}
 	
 	public void step() {
@@ -54,6 +63,22 @@ public class Simulation {
 		return currentState;
 	}
 	
+	public int[][] getIntialStateAsArray() {
+		
+		return initialState.toArray();
+	}
+	
+	public int[][] getCurrentStateAsArray() {
+		
+		return currentState.toArray();
+	}
+	
+	public RuleSet getRuleSet() {
+		
+		return ruleset;
+	}
+	
+/*	
 	public static void main(String args[]) {
 		
 		Grid g = new Grid(10, 10);
@@ -96,5 +121,5 @@ public class Simulation {
 		
 		
 	}
-		
+*/		
 }
