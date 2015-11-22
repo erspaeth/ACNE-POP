@@ -1,10 +1,13 @@
 package CS415;
 
+import java.awt.Color;
+
 public class ConwaysGameOfLife extends RuleSet {
 	
 	public static int NUMBER_OF_STATES = 2;
 	public static String RULE_NAME = "Conway's Game of Live";
 	public static String DESCRIPTION = "blah blah blah";
+	public static Color[] colors = {Color.GREEN, Color.RED};
 
 	public ConwaysGameOfLife() {
 		// TODO Auto-generated constructor stub
@@ -83,6 +86,12 @@ public class ConwaysGameOfLife extends RuleSet {
 	public String getDescription() {
 		// TODO Auto-generated method stub
 		return DESCRIPTION;
+	}
+
+	@Override
+	public Color[] getColorPallette() {
+		// TODO Auto-generated method stub
+		return colors;
 	}
 
 }

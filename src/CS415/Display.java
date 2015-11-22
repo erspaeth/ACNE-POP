@@ -20,15 +20,16 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class Display extends JPanel{
-	private final Color[] STATES = {Color.YELLOW, Color.BLACK, Color.RED, Color.GREEN};
+	private Color[] STATES;
 	private final int UNIT_SIZE = 10;
 	
 	private Grid currentGrid;
 	private HashMap<Integer, List<Point>> fillCells;
 	private int width, height;
 	
-	public Display(){
+	public Display(Color[] colors){
 		super();
+		STATES = colors;
 		width = 50;
 		height = 50;
 		
@@ -45,8 +46,9 @@ public class Display extends JPanel{
 		repaint();
 	}
 	
-	public Display(Grid source){
+	public Display(Grid source, Color[] colors){
 		super();
+		STATES = colors;
 		width = source.getWidth();
 		height = source.getHeight();
 		copyGrid(source);

@@ -31,7 +31,7 @@ public class SimControl extends JFrame{
 		this.sim = sim;
 		
 		
-		display = new Display(sim.getCurrentState());
+		display = new Display(sim.getCurrentState(), sim.getColorPallette());
 		displayWidth = display.getWidth()+20;
 		displayHeight = display.getHeight()+50;
 		display.setPreferredSize(new Dimension(displayWidth,displayHeight));
