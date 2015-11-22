@@ -11,6 +11,7 @@ public class CAMenuControl extends JFrame {
 	JTextField pathTF;
 	JLabel randomL, loadL, populationL, rulesetL, pathL;
 	ActionListener handler = new ButtonHandler();
+	FileManager fm = FileManager.getInstance();
 	
 	public CAMenuControl(RuleSet[] rules, String[] files){
 		
@@ -79,6 +80,8 @@ public class CAMenuControl extends JFrame {
 		add(pathL,c);
 		c.gridx = 1;
 		add(filenameCB,c);
+		c.gridx = 2;
+		add(loadFileB,c);
 		//row6 empty
 		//row7
 		c.gridy = 6;
@@ -104,6 +107,10 @@ public class CAMenuControl extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == randomB){
 				Simulation sim = new Simulation((RuleSet)rulesetCB.getSelectedItem(), 50, 50, (int)populationCB.getSelectedItem()); 
+				new SimControl(sim);
+			}
+			else if (e.getSource() == loadFileB){
+				Simulation sim = fm.loadXML(filenameCB.getSelectedItem().toString());
 				new SimControl(sim);
 			}
 			
