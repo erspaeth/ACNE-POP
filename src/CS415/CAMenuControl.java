@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 
 public class CAMenuControl extends JFrame {
 	
-	JButton randomB, loadFileB, loadShapeB, helpB, exitB;
-	JComboBox populationCB, rulesetCB, shapeCB, filenameCB;
+	JButton randomB, loadFileB, helpB, exitB;
+	JComboBox populationCB, rulesetCB, filenameCB;
 	JTextField pathTF;
-	JLabel randomL, loadL, shapeL, populationL, rulesetL, pathL, shapeSelectL;
+	JLabel randomL, loadL, populationL, rulesetL, pathL;
 	ActionListener handler = new ButtonHandler();
 	
 	public CAMenuControl(RuleSet[] rules, String[] files){
@@ -21,8 +21,6 @@ public class CAMenuControl extends JFrame {
 		randomB.addActionListener(handler);
 		loadFileB = new JButton("loadfile");
 		loadFileB.addActionListener(handler);
-		loadShapeB = new JButton("loadshape");
-		loadShapeB.addActionListener(handler);
 		helpB = new JButton("help");
 		helpB.addActionListener(handler);
 		exitB = new JButton("exit");
@@ -32,7 +30,6 @@ public class CAMenuControl extends JFrame {
 		Integer[] populations = {10,20,30,40,50,60,70,80,90};
 		populationCB = new JComboBox<Integer>(populations);
 		rulesetCB = new JComboBox<RuleSet>(rules);
-		shapeCB = new JComboBox<String>();
 		filenameCB = new JComboBox<String>(files);
 		
 		//labels
@@ -42,9 +39,6 @@ public class CAMenuControl extends JFrame {
 		
 		loadL = new JLabel("Load a saved simulation");
 		pathL = new JLabel("Select file");
-		
-		shapeL = new JLabel("Load a demo shap simulation");
-		shapeSelectL = new JLabel("Select shape to load");
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
