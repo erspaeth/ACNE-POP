@@ -14,14 +14,6 @@ public class Simulation {
 		ruleset = new ConwaysGameOfLife();
 	}
 	
-	public Simulation(RuleSet ruleset, Shape shape) {
-		
-		this();
-		initialState = new Grid(shape);
-		currentState = new Grid(shape);
-		nextState = new Grid();
-	}
-	
 	public Simulation(RuleSet ruleset, int width, int height, int cellFillRate) {
 		
 		this.ruleset = ruleset;

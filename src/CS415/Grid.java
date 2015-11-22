@@ -73,8 +73,6 @@ public class Grid {
 		
 	}
 	
-	//TODO Define this constructor
-	public Grid(Shape input){}
 	
 	public int getWidth() {
 		return width;
