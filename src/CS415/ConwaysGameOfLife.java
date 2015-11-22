@@ -67,4 +67,22 @@ public class ConwaysGameOfLife extends RuleSet {
 		return i;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return RULE_NAME;
+	}
+
+	@Override
+	public int getNumberOfStates() {
+		// TODO Auto-generated method stub
+		return NUMBER_OF_STATES;
+	}
+
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return DESCRIPTION;
+	}
+
 }

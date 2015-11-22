@@ -10,6 +10,7 @@ public class CAApplication {
 		//new SimControl(new Simulation());
 		System.out.println("Your application is awesome, and runs perfectly!");
 		String[] files = CAApplication.getAllLoadFiles();
+		new CAMenuControl(getAllRules(), files);
 		
 	}
 	

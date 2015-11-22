@@ -35,7 +35,7 @@ public class Grid {
 			
 			for(int j = 0; j < height; j++) {
 					if(rand.nextInt(100) < popPercentage){
-						liveCells.put(new Cell(i,j), rand.nextInt(numberOfStates));
+						liveCells.put(new Cell(i,j), rand.nextInt(numberOfStates-1) + 1);
 					}
 			}
 		}

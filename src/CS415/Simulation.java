@@ -17,7 +17,7 @@ public class Simulation {
 	public Simulation(RuleSet ruleset, int width, int height, int cellFillRate) {
 		
 		this.ruleset = ruleset;
-		initialState = new Grid(width, height, ruleset.NUMBER_OF_STATES, cellFillRate);
+		initialState = new Grid(width, height, ruleset.getNumberOfStates(), cellFillRate);
 		currentState = new Grid(initialState);
 		nextState = new Grid(width, height);
 		generation = 0;
