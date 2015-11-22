@@ -137,7 +137,7 @@ public class FileManager {
 		  }
 	}
 	
-	public void loadXML(String fileName){
+	public Simulation loadXML(String fileName){
 		SAXBuilder builder = new SAXBuilder();
 		File xmlFile = new File("./src/SaveFiles/" + fileName);
 		startArray = new int[50][50];
@@ -186,6 +186,8 @@ public class FileManager {
 		} catch (JDOMException jdomex) {
 			System.out.println(jdomex.getMessage());
 		}
+		
+		return new Simulation(new ConwaysGameOfLife(), startArray, currentArray, generation);
 	}
 	
 	/*

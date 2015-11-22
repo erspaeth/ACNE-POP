@@ -25,6 +25,15 @@ public class Simulation {
 		generation = 0;
 	}
 	
+	public Simulation(RuleSet ruleset, int[][] initialCellStates, int[][] currentCellStates, int generation) {
+		
+		this.ruleset = ruleset;
+		initialState = new Grid(initialCellStates);
+		currentState = new Grid(currentCellStates);
+		nextState = new Grid(initialState.width, initialState.height);
+		this.generation = generation;
+	}
+	
 	public void step() {
 		
 		generation++;
