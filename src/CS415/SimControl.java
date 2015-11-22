@@ -25,7 +25,8 @@ public class SimControl extends JFrame{
 	Simulation sim;
 	int displayWidth, displayHeight, buttonWidth = 90;
 	long rate;
-	SwingWorker worker = new CATimer();;
+	SwingWorker worker = new CATimer();
+	FileManager fm = FileManager.getInstance();
 	
 	public SimControl(Simulation sim){
 		this.sim = sim;
@@ -206,6 +207,8 @@ public class SimControl extends JFrame{
 				displayStats();
 				break;
 			case SAVE:
+				pause();
+				fm.saveXML(sim, "craigtest.xml");
 				break;
 			case EXIT:
 				System.exit(0);
