@@ -149,7 +149,7 @@ public class FileManager {
 			Element rootNode = document.getRootElement();
 			List mainElements = rootNode.getChildren("grid");
 
-			generation = Integer.parseInt(rootNode.getChild("currentCount").getValue());
+			generation = Integer.parseInt(rootNode.getChild("Generation").getValue());
 			ruleset = rootNode.getChild("options").getChild("ruleset").getValue();
 
 			for (int i = 0; i < mainElements.size(); i++) {
