@@ -1,5 +1,7 @@
 package CS415;
 
+import java.awt.Color;
+
 public abstract class RuleSet {
 //
 //	public static int NUMBER_OF_STATES;
@@ -13,5 +15,7 @@ public abstract class RuleSet {
 	public abstract int getNumberOfStates();
 	
 	public abstract String getDescription();
+	
+	public abstract Color[] getColorPallette();
 	
 }

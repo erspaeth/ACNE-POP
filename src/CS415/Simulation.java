@@ -1,5 +1,7 @@
 package CS415;
 
+import java.awt.Color;
+
 public class Simulation {
 
 	private Grid initialState, currentState, nextState;
@@ -70,6 +72,9 @@ public class Simulation {
 		return ruleset;
 	}
 	
+	public Color[] getColorPallette(){
+		return ruleset.getColorPallette();
+	}
 /*	
 	public static void main(String args[]) {
 		
