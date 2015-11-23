@@ -4,13 +4,16 @@ import java.io.File;
 import java.util.LinkedList;
 
 public class CAApplication {
+	
+	protected static CAMenuControl menu;
+	protected static SimControl control;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//new SimControl(new Simulation());
 		System.out.println("Your application is awesome, and runs perfectly!");
 		String[] files = CAApplication.getAllLoadFiles();
-		new CAMenuControl(getAllRules(), files);
+		menu = new CAMenuControl(getAllRules(), files);
 		
 	}
 	

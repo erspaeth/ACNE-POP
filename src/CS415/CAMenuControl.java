@@ -107,13 +107,16 @@ public class CAMenuControl extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == randomB){
 				Simulation sim = new Simulation((RuleSet)rulesetCB.getSelectedItem(), 50, 50, (int)populationCB.getSelectedItem()); 
-				new SimControl(sim);
+				CAApplication.control = new SimControl(sim);
 				setVisible(false);
 			}
 			else if (e.getSource() == loadFileB){
 				Simulation sim = fm.loadXML(filenameCB.getSelectedItem().toString());
 				new SimControl(sim);
 				setVisible(false);
+			}
+			else if (e.getSource() == exitB){
+				System.exit(0);
 			}
 			
 		}

@@ -211,7 +211,9 @@ public class SimControl extends JFrame{
 				fm.saveXML(sim, "craigtest.xml");
 				break;
 			case EXIT:
-				System.exit(0);
+				//System.exit(0);
+				setVisible(false);
+				CAApplication.menu = new CAMenuControl(CAApplication.getAllRules(), CAApplication.getAllLoadFiles());
 				break;
 			case STEP:
 				// pause first
