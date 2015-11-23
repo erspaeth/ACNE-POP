@@ -55,29 +55,33 @@ public class SimControl extends JFrame {
 
 		// JComboBox
 		rateL = new JLabel("Rate (FPS): ", JLabel.CENTER);
-		Integer[] rates = { 1, 2, 3, 4, 5, 10, 20 };
+		Integer[] rates = { 1, 2, 3, 4, 5, 10, 20, 50 };
 		Arrays.sort(rates, Collections.reverseOrder());
 		rateCB = new JComboBox<Integer>(rates);
+		rateCB.setSelectedIndex(2);
 		rateCB.addActionListener(buttonH);
 
 		rate = new Long((Integer) rateCB.getSelectedItem());
 
 		// JLabels
-		fpsL = new JLabel("FPS");
-		generationL = new JLabel("Generation");
-		populationL = new JLabel("Population");
+		fpsL = new JLabel("FPS", JLabel.CENTER);
+		generationL = new JLabel("Generation", JLabel.CENTER);
+		populationL = new JLabel("Population", JLabel.CENTER);
 
 		// JTextFields
 		fpsTF = new JTextField(rateCB.getSelectedItem().toString());
 		fpsTF.setEditable(false);
+		fpsTF.setHorizontalAlignment(JTextField.CENTER);
 		generationTF = new JTextField("" + sim.getGeneration());
 		generationTF.setEditable(false);
+		generationTF.setHorizontalAlignment(JTextField.CENTER);
 		populationTF = new JTextField("" + sim.getPopulation());
 		populationTF.setEditable(false);
+		populationTF.setHorizontalAlignment(JTextField.CENTER);
 
 		// JTextArea
 		messageTA = new JTextArea();
-		messageTA.setRows(10);
+		messageTA.setEditable(false);
 		displayStats();
 		messageP = new JScrollPane(messageTA);
 
@@ -95,7 +99,7 @@ public class SimControl extends JFrame {
 
 		setTitle("Grid Display");
 		// setSize(650, 800);
-		setSize(displayWidth, displayHeight + 200);
+		setSize(displayWidth, displayHeight + 160);
 		setResizable(false);
 
 		// //borderlayout
@@ -109,7 +113,7 @@ public class SimControl extends JFrame {
 		GridBagConstraints c = new GridBagConstraints();
 		// first row
 		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
+		c.insets = new Insets(1, 10, 1, 9);
 		c.weightx = 1;
 		c.weighty = 0;
 		c.gridx = 0;
