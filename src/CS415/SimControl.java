@@ -208,7 +208,16 @@ public class SimControl extends JFrame{
 				break;
 			case SAVE:
 				pause();
-				fm.saveXML(sim, "craigtest.xml");
+				JOptionPane op = new JOptionPane();
+				String filename = op.showInputDialog("Please enter an xml filename:");
+				if (filename.contains(".")){
+					if (!filename.endsWith(".xml")){
+						filename = filename.substring(0, filename.indexOf("."));
+						filename += ".xml";
+					}
+				}
+				
+				fm.saveXML(sim, filename);
 				break;
 			case EXIT:
 				//System.exit(0);
