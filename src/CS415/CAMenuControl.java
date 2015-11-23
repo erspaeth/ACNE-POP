@@ -10,6 +10,8 @@ public class CAMenuControl extends JFrame {
 	JComboBox populationCB, rulesetCB, filenameCB;
 	JTextField pathTF;
 	JLabel randomL, loadL, populationL, rulesetL, pathL;
+	JSeparator sep1, sep2;
+	JPanel buttonP;
 	ActionListener handler = new ButtonHandler();
 	FileManager fm = FileManager.getInstance();
 	
@@ -18,13 +20,13 @@ public class CAMenuControl extends JFrame {
 		super();
 		
 		//buttons
-		randomB = new JButton("random");
+		randomB = new JButton("Create Simulation");
 		randomB.addActionListener(handler);
-		loadFileB = new JButton("loadfile");
+		loadFileB = new JButton("Load Simulation");
 		loadFileB.addActionListener(handler);
-		helpB = new JButton("help");
+		helpB = new JButton("Help");
 		helpB.addActionListener(handler);
-		exitB = new JButton("exit");
+		exitB = new JButton("Exit");
 		exitB.addActionListener(handler);
 		
 		//comboboxes
@@ -34,12 +36,28 @@ public class CAMenuControl extends JFrame {
 		filenameCB = new JComboBox<String>(files);
 		
 		//labels
-		randomL = new JLabel("Randomly populated simulation");
-		populationL = new JLabel("Percent populated");
-		rulesetL = new JLabel("Ruleset to use");
+		Font title = new Font("Ariel", Font.BOLD, 14);
+		randomL = new JLabel("Create a simulation:", JLabel.CENTER);
+		randomL.setFont(title);
+		populationL = new JLabel("Percent populated: ", JLabel.RIGHT);
+		rulesetL = new JLabel("Ruleset to use: ", JLabel.RIGHT);
 		
-		loadL = new JLabel("Load a saved simulation");
-		pathL = new JLabel("Select file");
+		loadL = new JLabel("Load simulation from xml file:", JLabel.CENTER);
+		loadL.setFont(title);
+		pathL = new JLabel("Select file: ", JLabel.RIGHT);
+		
+		sep1 = new JSeparator(JSeparator.HORIZONTAL);
+		sep1.setPreferredSize(new Dimension(50,5));
+		sep1.setBackground(Color.DARK_GRAY);
+		
+		sep2 = new JSeparator(JSeparator.HORIZONTAL);
+		sep2.setPreferredSize(new Dimension(50,5));
+		sep2.setBackground(Color.DARK_GRAY);
+		
+		buttonP = new JPanel();
+		buttonP.setLayout(new GridLayout(1,2,1,1));
+		buttonP.add(helpB);
+		buttonP.add(exitB);
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -49,51 +67,60 @@ public class CAMenuControl extends JFrame {
 		c.gridx = 0;
 		c.gridy = 0;
 		//row1
-		c.gridwidth = 3;
+		c.gridwidth = 2;
 		add(randomL, c);
 		//row2
 		c.gridwidth = 1;
 		c.gridy = 1;
 		c.gridx = 0;
-		add(populationL, c);
+		add(rulesetL, c);
 		c.gridx = 1;
-		add(populationCB,c);
-		c.gridx = 2;
-		c.gridheight = 2;
-		add(randomB,c);
-		c.gridheight = 1;
+		add(rulesetCB,c);
 		//row3
+		c.gridwidth = 1;
 		c.gridy++;
 		c.gridx = 0;
-		add(rulesetL,c);
+		add(populationL,c);
 		c.gridx++;
-		add(rulesetCB,c);
+		add(populationCB,c);
+		c.gridy++;
+		c.gridx = 1;
+		add(randomB,c);
+		//sep
+		c.gridy++;
+		c.gridx = 0;
+		c.gridwidth = 2;
+		add(sep1,c);
 		//row4
-		c.gridwidth = 3;
-		c.gridy = 3;
+		c.gridwidth = 2;
+		c.gridy++;
 		c.gridx = 0;
 		add(loadL,c);
 		//row5
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy++;
 		c.gridx = 0;
 		add(pathL,c);
 		c.gridx = 1;
 		add(filenameCB,c);
-		c.gridx = 2;
+		c.gridy++;
+		c.gridx = 1;
 		add(loadFileB,c);
-		//row6 empty
-		//row7
-		c.gridy = 6;
+		//sep
+		c.gridy++;
 		c.gridx = 0;
-		add(helpB,c);
-		c.gridx = 2;
-		add(exitB,c);
+		c.gridwidth = 3;
+		add(sep2,c);
+		//row6
+		c.gridy++;
+		c.gridx = 0;
+		c.gridwidth = 3;
+		add(buttonP,c);
 		
 		
 		
 		
-		setSize(500,200);
+		setSize(500,300);
 		setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -116,7 +143,16 @@ public class CAMenuControl extends JFrame {
 				setVisible(false);
 			}
 			else if (e.getSource() == exitB){
+				JOptionPane op = new JOptionPane();
+				op.showMessageDialog(null, "Your application is awesome, and ran perfectly!");
 				System.exit(0);
+			}
+			else if (e.getSource() == rulesetCB){
+				if (rulesetCB.getSelectedItem().getClass().getName().equals("CS415.ConwaysGameOfLife")){
+					populationCB.setEnabled(false);
+				} else {
+					populationCB.setEnabled(true);
+				}
 			}
 			
 		}
