@@ -78,7 +78,7 @@ public class FileManager {
 			//doc.setRootElement(simulation);
 
 			Element options = new Element("options");
-			options.addContent(new Element("ruleset").setText(simulationToSave.getRuleSet().getClass().getSimpleName()));
+			options.addContent(new Element("ruleset").setText(simulationToSave.getRuleSet().getClass().getName()));
 
 			doc.getRootElement().addContent(options);
 
@@ -187,7 +187,21 @@ public class FileManager {
 			System.out.println(jdomex.getMessage());
 		}
 		
-		return new Simulation(new ConwaysGameOfLife(), startArray, currentArray, generation);
+		RuleSet rules = null;;
+		try {
+			Class c = Class.forName(ruleset);
+			rules = (RuleSet)c.newInstance();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new Simulation(rules, startArray, currentArray, generation);
 	}
 	
 	/*
