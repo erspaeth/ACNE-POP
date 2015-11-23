@@ -58,7 +58,9 @@ public class Cell {
 		return true;
 	}
 	
-	
+	public String toString() {
+		return String.format("Row: %d - Col: %d", row, col);
+	}
 	
 
 }

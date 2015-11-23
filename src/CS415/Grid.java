@@ -88,18 +88,30 @@ public class Grid {
 	
 	public int getCellValue(int row, int col) {
 		
-		Integer v = liveCells.get( new Cell(row, col));
+		return getCellValue(new Cell(row, col));
+	}
+	
+	public int getCellValue(Cell target) {
 		
+		Integer v = liveCells.get(target);
 		return (v != null) ? v.intValue() : 0;
 	}
 	
 	public void setCellValue(int row, int col, int val) {
 		
-		if(val != 0) {
-			
-			liveCells.put(new Cell(row, col), val);
-		}
+		liveCells.put(new Cell(row, col), new Integer(val));
+	}
+	
+	public void setCellValue(Cell cell, Integer val) {
 		
+		if(val == 0) {
+			
+			liveCells.remove(cell);
+		}
+		else {
+			
+			liveCells.put(cell,  val);
+		}
 	}
 	
 	public int[][] toArray() {
@@ -144,6 +156,22 @@ public class Grid {
 		sbBuffer.append("\n");
 		sReturn = sbBuffer.toString();
 		return sReturn;
+	}
+	
+	public static void copyLiveCells(Grid source, Grid target) {
+		
+		target.clear();
+		
+		Set<Map.Entry<Cell, Integer>> cells = source.getLiveCells();
+		
+		Cell temp;
+		Integer value;
+		for( Map.Entry<Cell, Integer> entry : cells){ 
+			
+			temp = entry.getKey();
+			value = new Integer(entry.getValue());
+			target.setCellValue(temp, value);
+		}
 	}
 	
 }
