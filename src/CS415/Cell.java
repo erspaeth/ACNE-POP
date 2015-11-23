@@ -33,10 +33,6 @@ public class Cell {
 		return col;
 	}
 	
-	public String toString() {
-		return String.format("Row: %d - Col: %d", row, col);
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
