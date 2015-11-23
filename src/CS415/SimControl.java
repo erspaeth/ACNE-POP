@@ -1,4 +1,5 @@
 package CS415;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,15 +7,15 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class SimControl extends JFrame{
+public class SimControl extends JFrame {
 
-	private static final String PLAY = "Play", PAUSE = "Pause", STEP = "Step", 
-			RESET = "Reset", SAVE = "Save", EXIT = "Exit";
-	
+	private static final String PLAY = "Play", PAUSE = "Pause", STEP = "Step", RESET = "Reset", SAVE = "Save",
+			EXIT = "Exit";
+
 	Display display;
 	JButton pauseB, playB, stepB, rateB, resetB, saveB, exitB;
 	JLabel rateL, fpsL, generationL, populationL;
-	JTextField fpsTF, generationTF,populationTF;
+	JTextField fpsTF, generationTF, populationTF;
 	JComboBox<Integer> rateCB;
 	JTextArea messageTA;
 	JPanel controlP;
@@ -27,17 +28,16 @@ public class SimControl extends JFrame{
 	long rate;
 	SwingWorker worker = new CATimer();
 	FileManager fm = FileManager.getInstance();
-	
-	public SimControl(Simulation sim){
+
+	public SimControl(Simulation sim) {
 		this.sim = sim;
-		
-		
+
 		display = new Display(sim.getCurrentState(), sim.getColorPallette());
-		displayWidth = display.getWidth()+20;
-		displayHeight = display.getHeight()+50;
-		display.setPreferredSize(new Dimension(displayWidth,displayHeight));
-		
-		//JButtons
+		displayWidth = display.getWidth() + 20;
+		displayHeight = display.getHeight() + 50;
+		display.setPreferredSize(new Dimension(displayWidth, displayHeight));
+
+		// JButtons
 		buttonH = new ButtonHandler();
 		pauseB = new JButton(PAUSE);
 		pauseB.addActionListener(buttonH);
@@ -52,137 +52,136 @@ public class SimControl extends JFrame{
 		saveB.addActionListener(buttonH);
 		exitB = new JButton(EXIT);
 		exitB.addActionListener(buttonH);
-		
-		//JComboBox
+
+		// JComboBox
 		rateL = new JLabel("Rate (FPS): ", JLabel.CENTER);
-		Integer[] rates = {1,2,3,4,5,10,20};
+		Integer[] rates = { 1, 2, 3, 4, 5, 10, 20 };
 		Arrays.sort(rates, Collections.reverseOrder());
 		rateCB = new JComboBox<Integer>(rates);
 		rateCB.addActionListener(buttonH);
 
-		rate = new Long((Integer)rateCB.getSelectedItem());
-		
-		//JLabels
+		rate = new Long((Integer) rateCB.getSelectedItem());
+
+		// JLabels
 		fpsL = new JLabel("FPS");
 		generationL = new JLabel("Generation");
 		populationL = new JLabel("Population");
-		
-		//JTextFields
+
+		// JTextFields
 		fpsTF = new JTextField(rateCB.getSelectedItem().toString());
 		fpsTF.setEditable(false);
 		generationTF = new JTextField("" + sim.getGeneration());
 		generationTF.setEditable(false);
 		populationTF = new JTextField("" + sim.getPopulation());
 		populationTF.setEditable(false);
-		
-		//JTextArea
+
+		// JTextArea
 		messageTA = new JTextArea();
 		messageTA.setRows(10);
 		displayStats();
 		messageP = new JScrollPane(messageTA);
-		
-		//JPanel
+
+		// JPanel
 		controlP = new JPanel();
-		controlP.setLayout(new GridLayout(1,5,1,1));
+		controlP.setLayout(new GridLayout(1, 5, 1, 1));
 		controlP.add(playB);
 		controlP.add(pauseB);
 		controlP.add(stepB);
 		controlP.add(rateL);
 		controlP.add(rateCB);
-		//controlP.add(resetB);
-		//controlP.add(saveB);
-		//controlP.add(exitB);
-		
+		// controlP.add(resetB);
+		// controlP.add(saveB);
+		// controlP.add(exitB);
+
 		setTitle("Grid Display");
-        //setSize(650, 800);
+		// setSize(650, 800);
 		setSize(displayWidth, displayHeight + 200);
 		setResizable(false);
-        
-//		//borderlayout
-//		setLayout(new BorderLayout(10, 10));
-//        add(display, BorderLayout.CENTER);
-//        add(controlP, BorderLayout.NORTH);
-//        add(messageP, BorderLayout.SOUTH);
-        
-        //gridbaglayout
-        setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        //first row
-        c.fill = GridBagConstraints.BOTH;
-        c.insets = new Insets(5,5,5,5);
-        c.weightx = 1;
-        c.weighty = 0;
-        c.gridx = 0;
-        c.gridy = 0;
-        add(playB,c);
-        c.gridx++;
-        add(pauseB,c);
-        c.gridx++;
-        add(stepB,c);
-        c.gridx++;
-        add(rateL,c);
-        c.gridx++;
-        add(rateCB,c);
-        //display
-        c.gridy++;
-        c.gridx = 0;
-        c.gridwidth = 5;
-        c.weighty = displayHeight+20;
-        add(display, c);
-        c.gridy++;
-        c.gridx = 0;
-        c.gridwidth = 2;
-        c.weighty = 0;
-        add(resetB,c);
-        c.gridx++;
-        c.gridx++;
-        add(saveB,c);
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.gridx++;
-        c.gridx++;
-        add(exitB,c);
-        c.gridy++;
-        c.gridx = 1;
-        c.gridwidth = 1;
-        add(fpsL,c);
-        c.gridx++;
-        add(generationL,c);
-        c.gridx++;
-        add(populationL,c);
-        c.gridy++;
-        c.gridx = 1;
-        c.gridwidth = 1;
-        add(fpsTF,c);
-        c.gridx++;
-        add(generationTF,c);
-        c.gridx++;
-        add(populationTF,c);
-        c.gridy++;
-        c.gridx = 0;
-        c.gridwidth = 5;
-        c.weighty = 50;
-        add(messageP,c);
-        
-        
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
+
+		// //borderlayout
+		// setLayout(new BorderLayout(10, 10));
+		// add(display, BorderLayout.CENTER);
+		// add(controlP, BorderLayout.NORTH);
+		// add(messageP, BorderLayout.SOUTH);
+
+		// gridbaglayout
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		// first row
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 1;
+		c.weighty = 0;
+		c.gridx = 0;
+		c.gridy = 0;
+		add(playB, c);
+		c.gridx++;
+		add(pauseB, c);
+		c.gridx++;
+		add(stepB, c);
+		c.gridx++;
+		add(rateL, c);
+		c.gridx++;
+		add(rateCB, c);
+		// display
+		c.gridy++;
+		c.gridx = 0;
+		c.gridwidth = 5;
+		c.weighty = displayHeight + 20;
+		add(display, c);
+		c.gridy++;
+		c.gridx = 0;
+		c.gridwidth = 2;
+		c.weighty = 0;
+		add(resetB, c);
+		c.gridx++;
+		c.gridx++;
+		add(saveB, c);
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridx++;
+		c.gridx++;
+		add(exitB, c);
+		c.gridy++;
+		c.gridx = 1;
+		c.gridwidth = 1;
+		add(fpsL, c);
+		c.gridx++;
+		add(generationL, c);
+		c.gridx++;
+		add(populationL, c);
+		c.gridy++;
+		c.gridx = 1;
+		c.gridwidth = 1;
+		add(fpsTF, c);
+		c.gridx++;
+		add(generationTF, c);
+		c.gridx++;
+		add(populationTF, c);
+		c.gridy++;
+		c.gridx = 0;
+		c.gridwidth = 5;
+		c.weighty = 50;
+		add(messageP, c);
+
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
 	}
-	
-	private void play(){
+
+	private void play() {
 		pauseB.setEnabled(true);
 		playB.setEnabled(false);
 		worker = new CATimer();
 		worker.execute();
 	}
-	
+
 	private void pause() {
 		worker.cancel(true);
 		playB.setEnabled(true);
 		pauseB.setEnabled(false);
 	}
-	
-	private void displayStats(){
+
+	private void displayStats() {
 		fpsTF.setText("" + rate);
 		populationTF.setText("" + sim.getPopulation());
 		generationTF.setText("" + sim.getGeneration());
@@ -191,7 +190,7 @@ public class SimControl extends JFrame{
 	// action listener for buttons
 	class ButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
+
 			String value = e.getActionCommand();
 			switch (value) {
 			case PLAY:
@@ -210,17 +209,17 @@ public class SimControl extends JFrame{
 				pause();
 				JOptionPane op = new JOptionPane();
 				String filename = op.showInputDialog("Please enter an xml filename:");
-				if (filename.contains(".")){
-					if (!filename.endsWith(".xml")){
+
+				if (filename.contains(".")) {
+					if (!filename.endsWith(".xml")) {
 						filename = filename.substring(0, filename.indexOf("."));
 						filename += ".xml";
 					}
 				}
-				
 				fm.saveXML(sim, filename);
 				break;
 			case EXIT:
-				//System.exit(0);
+				// System.exit(0);
 				setVisible(false);
 				CAApplication.menu = new CAMenuControl(CAApplication.getAllRules(), CAApplication.getAllLoadFiles());
 				break;
@@ -232,7 +231,7 @@ public class SimControl extends JFrame{
 				displayStats();
 				break;
 			default:
-				if (!playB.isEnabled()){
+				if (!playB.isEnabled()) {
 					pause();
 					play();
 				}
@@ -244,16 +243,16 @@ public class SimControl extends JFrame{
 	protected void updateMessage(String message) {
 		messageTA.setText(message);
 	}
-		
+
 	class CATimer extends SwingWorker {
 
 		@Override
 		protected Object doInBackground() throws Exception {
 			running = true;
-			rate = new Long((Integer)rateCB.getSelectedItem());
-			long time = 1000/rate;
-			
-			while (running){
+			rate = new Long((Integer) rateCB.getSelectedItem());
+			long time = 1000 / rate;
+
+			while (running) {
 				Thread.sleep(time);
 				sim.step();
 				display.draw(sim.getCurrentState());
@@ -262,7 +261,6 @@ public class SimControl extends JFrame{
 			return null;
 		}
 
-
 	}
-	
+
 }
