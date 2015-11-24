@@ -21,6 +21,7 @@ public class CAApplication {
 		return new RuleSet[]
 						{
 						new ConwaysGameOfLife(),
+						new LangtonsAnt()
 						};
 		
 	}

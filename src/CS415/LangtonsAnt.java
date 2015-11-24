@@ -8,7 +8,7 @@ public class LangtonsAnt extends RuleSet {
 	public static String RULE_NAME = "Langton's Ant";
 	public static String DESCRIPTION = "This one does some stuff";
 	public static Color[] colors = {
-							Color.YELLOW, Color.BLUE,
+							Color.DARK_GRAY, Color.GRAY,
 							Color.RED, Color.RED,
 							Color.RED, Color.RED, 
 							Color.RED, Color.RED,
