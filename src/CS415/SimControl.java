@@ -55,10 +55,9 @@ public class SimControl extends JFrame {
 
 		// JComboBox
 		rateL = new JLabel("Rate (FPS): ", JLabel.CENTER);
-		Integer[] rates = { 1, 2, 3, 4, 5, 10, 20, 50 };
+		Integer[] rates = { 1, 2, 3, 4, 5, 10, 25, 50 };
 		Arrays.sort(rates, Collections.reverseOrder());
 		rateCB = new JComboBox<Integer>(rates);
-		rateCB.setSelectedIndex(2);
 		rateCB.addActionListener(buttonH);
 
 		rate = new Long((Integer) rateCB.getSelectedItem());
@@ -219,6 +218,8 @@ public class SimControl extends JFrame {
 						filename = filename.substring(0, filename.indexOf("."));
 						filename += ".xml";
 					}
+				} else {
+					filename += ".xml";
 				}
 				fm.saveXML(sim, filename);
 				break;

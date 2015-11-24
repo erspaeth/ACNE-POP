@@ -33,13 +33,14 @@ public class CAMenuControl extends JFrame {
 		Integer[] populations = {10,20,30,40,50,60,70,80,90};
 		populationCB = new JComboBox<Integer>(populations);
 		rulesetCB = new JComboBox<RuleSet>(rules);
+		rulesetCB.addActionListener(handler);
 		filenameCB = new JComboBox<String>(files);
 		
 		//labels
 		Font title = new Font("Ariel", Font.BOLD, 14);
 		randomL = new JLabel("Create a simulation:", JLabel.CENTER);
 		randomL.setFont(title);
-		populationL = new JLabel("Percent populated: ", JLabel.RIGHT);
+		populationL = new JLabel("Population (%): ", JLabel.RIGHT);
 		rulesetL = new JLabel("Ruleset to use: ", JLabel.RIGHT);
 		
 		loadL = new JLabel("Load simulation from xml file:", JLabel.CENTER);
@@ -128,14 +129,27 @@ public class CAMenuControl extends JFrame {
 		
 	}
 	
+	private Simulation loadAnt(){
+		return fm.loadXML("LANGTONS_ANT.xml");
+	}
+	
 	class ButtonHandler implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == randomB){
-				Simulation sim = new Simulation((RuleSet)rulesetCB.getSelectedItem(), 50, 50, (int)populationCB.getSelectedItem()); 
-				CAApplication.control = new SimControl(sim);
-				setVisible(false);
+				Simulation sim;
+				if (rulesetCB.getSelectedItem().getClass().getName().equals("CS415.LangtonsAnt")) {
+					sim = loadAnt();
+				}
+				else{
+					sim = new Simulation((RuleSet)rulesetCB.getSelectedItem(), 50, 50, (int)populationCB.getSelectedItem()); 
+				}
+				
+				if (sim != null){
+					CAApplication.control = new SimControl(sim);
+					setVisible(false);
+				}
 			}
 			else if (e.getSource() == loadFileB){
 				Simulation sim = fm.loadXML(filenameCB.getSelectedItem().toString());
@@ -148,10 +162,12 @@ public class CAMenuControl extends JFrame {
 				System.exit(0);
 			}
 			else if (e.getSource() == rulesetCB){
-				if (rulesetCB.getSelectedItem().getClass().getName().equals("CS415.ConwaysGameOfLife")){
-					populationCB.setEnabled(false);
+				if (rulesetCB.getSelectedItem().getClass().getName().equals("CS415.LangtonsAnt")){
+					populationL.setVisible(false);
+					populationCB.setVisible(false);
 				} else {
-					populationCB.setEnabled(true);
+					populationL.setVisible(true);
+					populationCB.setVisible(true);
 				}
 			}
 			
